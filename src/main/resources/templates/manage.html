@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tourist Guide - Find og gem dine yndlings turistattraktioner.">
+    <meta name="keywords" content="turisme, guide, attraktioner, rejser, sightseeing">
+    <meta name="author" content="Tourist Guide Team">
+
+    <title>Tourist Guide</title>
+
+
+    <link rel="icon" th:href="@{/images/favicon.webp}" type="image/webp">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/favicon.webp">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">
+                <img id="logobillede" src="/images/favicon.webp" alt="Logobillede">
+            </a></li>
+            <li><a th:href="@{/attractions}">Se Attraktioner</a></li>
+            <li><a th:href="@{/attractions/add}">Tilføj Attraktion</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <button type="button" class="btn toggle-btn" onclick="toggleForm()">➕ Tilføj Attraktion</button>
+
+    <!-- Skjult form, der tilføjer en attraction -->
+    <form id="addForm" th:action="@{/attractions/save}" method="post" class="add-form">
+        <label for="name">Navn:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="city">Vælg by:</label>
+        <select id="city" name="city">
+            <option th:each="city : ${cities}" th:value="${city}" th:text="${city.getScreenName()}"></option>
+        </select>
+
+        <label for="tags">Vælg kategorier:</label>
+        <select id="tags" name="tags" multiple>
+            <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getScreenName()}"></option>
+        </select>
+
+        <label for="description">Beskrivelse:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <button class="btn" type="submit">Tilføj Attraktion</button>
+    </form>
+
+
+
+    <h1>Administrér Attraktioner</h1>
+
+    <!-- Vis en oversigt over attraktioner med knapper til Edit og Delete -->
+    <table class="manage-table">
+        <thead>
+        <tr>
+            <th>Navn</th>
+            <th>By</th>
+            <th>Beskrivelse</th>
+            <th>Handlinger</th>
+        </tr>
+        </thead>
+        <tbody th:each="attraction : ${attractionList}">
+        <tr>
+            <td th:text="${attraction.name}">Attraktion Navn</td>
+            <td th:text="${attraction.getCity().getScreenName()}">Attraktion By</td>
+            <td th:text="${attraction.getDescription()}">Attraktion Beskrivelse</td>
+            <td>
+                <a th:href="@{'/attractions/edit/' + ${attraction.name}}" class="btn-link">Rediger</a>
+                &nbsp;|&nbsp;
+<!--                Vi er nød til at bruge form fordi det er en post request-->
+                <form th:action="@{'/attractions/delete/' + ${attraction.name}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn-delete" onclick="return confirm('Er du sikker på, at du vil slette denne attraktion?')">Slet</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</main>
+<script th:src="@{/javascript/script.js}"></script>
+</body>
+
+<footer>
+    <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> Tourist Guide. Alle rettigheder forbeholdt.</p>
+    <p><a th:href="@{/contact}">Kontakt os</a> | <a th:href="@{/about}">Om os</a></p>
+    <p>Gruppe 2: <br> Andreas, <br>Gustavo, <br>Daniel, <br> Frederik.</p>
+</footer>
+</html>

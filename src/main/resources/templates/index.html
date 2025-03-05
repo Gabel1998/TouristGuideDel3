@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tourist Guide - Find og gem dine yndlings turistattraktioner.">
+    <meta name="keywords" content="turisme, guide, attraktioner, rejser, sightseeing">
+    <meta name="author" content="Tourist Guide Team">
+
+    <title>Tourist Guide</title>
+    <link rel="icon" th:href="@{/images/favicon.webp}" type="image/webp">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/favicon.webp">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css?v=0.07}">
+
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">
+                <img id="logobillede" src="/images/favicon.webp" alt="Logobillede">
+            </a></li>
+            <li><a th:href="@{/attractions}">Se Attraktioner</a></li>
+            <li><a th:href="@{/attractions/add}">Tilføj Attraktion</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div id="top-page-content">
+        <div>
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 4</div>
+                <img class="sliderBillede"src="/images/chrstiania.jpg">
+                <div class="text">Christania</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 4</div>
+                <img src="/images/hchus.png">
+                <div class="text">Hc Andersens hus - Odense</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 4</div>
+                <img src="/images/møns.jpg">
+                <div class="text">Møns klint</div>
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">4 / 4</div>
+                <img src="/images/tivolibynight.jpeg">
+                <div class="text">Tivoli By Night</div>
+            </div>
+
+        </div>
+        <br>
+
+              <div style="text-align:center">
+                      <span class="dot"></span>
+                      <span class="dot"></span>
+                         <span class="dot"></span>
+                  <span class="dot"></span>
+              </div>
+        </div>
+        
+        <div id="first-content-text-part">
+            <h2>Oplev Danmark med TouristGuide.dk</h2>
+            <p>Velkommen til TouristGuide.dk – din ultimative guide til Danmarks bedste oplevelser!
+                Vores mål er at gøre din rejse så nem og inspirerende som muligt. Vi samler de mest spændende attraktioner, skjulte perler og lokale favoritter, så du hurtigt kan finde de oplevelser, der passer til dig. Uanset om du er til historiske slotte, smukke naturområder, pulserende storbyliv eller hyggelige landsbyer, har vi noget for enhver smag.
+                Klik dig videre til vores håndplukkede attraktioner, og planlæg din næste eventyr i Danmark!
+                <br>
+                <br>➡ Find din næste oplevelse her ⬇️</p>
+            <a th:href="@{/attractions}">
+                <button>Klik her!</button>
+            </a>
+
+        </div>
+    </div>
+    
+    
+    
+    
+
+
+</main>
+
+
+
+
+<script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+        setTimeout(showSlides, 3000); // Change image every 2 seconds
+    }
+</script>
+</body>
+
+<footer>
+    <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> Tourist Guide. Alle rettigheder forbeholdt.</p>
+    <p><a th:href="@{/contact}">Kontakt os</a> | <a th:href="@{/about}">Om os</a></p>
+    <p>Gruppe 2: <br> Andreas, <br>Gustavo, <br>Daniel, <br> Frederik.</p>
+</footer>
+</html>
