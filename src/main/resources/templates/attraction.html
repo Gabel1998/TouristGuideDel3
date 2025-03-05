@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tourist Guide - Find og gem dine yndlings turistattraktioner.">
+    <meta name="keywords" content="turisme, guide, attraktioner, rejser, sightseeing">
+    <meta name="author" content="Tourist Guide Team">
+
+    <title>Tourist Guide</title>
+
+
+    <link rel="icon" th:href="@{/images/favicon.webp}" type="image/webp">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/favicon.webp">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css?v=0.01}">
+
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">
+                <img id="logobillede" src="/images/favicon.webp" alt="Logobillede">
+            </a></li>
+            <li><a th:href="@{/attractions}">Se Attraktioner</a></li>
+            <li><a th:href="@{/attractions/add}">Tilføj Attraktion</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<main>
+    <section class="attraction-card">
+        <div class="attraction-card-left">
+            <h1 th:text="${attraction.name} + ' i ' + ${attraction.getCity().getScreenName() +', Danmark'}"></h1>
+            <p th:text="${attraction.getDescription()}"></p>
+        </div>
+        <div th:each="tag : ${attraction.getTags()}" class="attraction-card-right">
+            <div>
+                <p th:text="${tag.getScreenName()}"></p>
+            </div>
+        </div>
+
+
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> Tourist Guide. Alle rettigheder
+        forbeholdt.</p>
+    <p><a th:href="@{/contact}">Kontakt os</a> | <a th:href="@{/about}">Om os</a></p>
+    <p>Gruppe 2: <br> Andreas, <br>Gustavo, <br>Daniel, <br> Frederik.</p>
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,480 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --primær-font: "Roboto Condensed", serif;
+    --primær-farve: #f6f4e8;
+    --sekundær-farve: #BACEC1;
+    --overskrift-farve: #E59560;
+    --tekst-farve: #1D3124;
+
+}
+
+/*herunder er generelle stylinger*/
+body {
+    background-color: var(--primær-farve);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#logobillede {
+    height: 50px;
+    width: 50px;
+    border-radius: 15px;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: var(--primær-font);
+    color: var(--overskrift-farve);
+    text-align: center;
+}
+
+p, a {
+    font-family: var(--primær-font);
+    color: var(--tekst-farve);
+}
+
+header {
+    padding: 0;
+    margin: 0;
+}
+
+/* Herunder styling for at gøre at siden er propotionel */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+}
+
+/* tagsside Styling */
+.tags-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+}
+
+.tags-card {
+    border-radius: 10%;
+    text-align: center;
+    padding-bottom: 2em;
+    color: var(--tekst-farve);
+    background-color: var(--sekundær-farve);
+}
+
+.tags-card-header {
+    color: var(--tekst-farve);
+    background-color: var(--sekundær-farve);
+}
+
+.tags-card-header h2 {
+    margin-top: 0;
+    padding: 15px;
+    color: var(--tekst-farve);
+    background-color: var(--sekundær-farve);
+}
+
+
+/* Herunder navbar styling */
+nav ul {
+    margin: 0;
+    list-style-type: none;
+    background-color: var(--sekundær-farve);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--tekst-farve);
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/*Herunder solo attraction*/
+.attraction-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.attraction-card-left {
+    margin: 50px;
+}
+
+.attraction-card-right {
+    border-radius: 15%;
+    background-color: #6bedab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    padding: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.attraction-card-right div p {
+    margin: 0;
+}
+
+
+/*Herunder er index.html*/
+
+
+/*Attractions.html design herunder*/
+
+
+/* Her under er editAttraction siden */
+.edit-form {
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid var(--sekundær-farve);
+    border-radius: 8px;
+    background-color: var(--primær-farve);
+}
+
+/* Label styling */
+.edit-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--tekst-farve);
+}
+
+/* Input-felter */
+.form-input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid var(--sekundær-farve);
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    color: var(--tekst-farve);
+}
+
+/* Tekstfelt (beskrivelse) */
+.edit-form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Knap styling */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: var(--overskrift-farve);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: var(--sekundær-farve);
+    color: var(--tekst-farve);
+}
+
+
+/*Herunder er manage.html styling af siden*/
+
+/* Styling til add-form */
+.add-form {
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid var(--sekundær-farve);
+    border-radius: 8px;
+    background-color: var(--primær-farve);
+}
+
+.add-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--tekst-farve);
+}
+
+.add-form select, .add-form button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid var(--sekundær-farve);
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.add-form textarea {
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+}
+
+.add-form input, .add-form textarea, .add-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid var(--sekundær-farve);
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    color: var(--tekst-farve);
+}
+
+
+.manage-table, .attraction-table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.manage-table th, .manage-table td, .attraction-table th, .attraction-table td {
+    padding: 10px;
+    border: 1px solid var(--sekundær-farve);
+    text-align: left;
+}
+
+.manage-table th, .attraction-table th {
+    background-color: var(--sekundær-farve);
+    color: var(--tekst-farve);
+}
+
+.manage-table tr:nth-child(even) {
+    background-color: var(--primær-farve);
+}
+
+.attraction-table tbody:nth-child(even) {
+    background-color: var(--primær-farve);
+}
+
+.btn-link {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: var(--overskrift-farve);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.btn-link:hover {
+    background-color: var(--sekundær-farve);
+    color: var(--tekst-farve);
+}
+
+.btn-delete {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: darkred;
+}
+
+/*AttractionTags styling*/
+
+
+/*styr placering af første content i main påage*/
+#top-page-content {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+#first-content-text-part {
+
+    margin: 50px;
+    font-size: 1.3em;
+}
+
+#first-content-text-part button {
+    border-width: 0px;
+    border-radius: 5%;
+    color: var(--primær-farve);
+    background-color: var(--sekundær-farve);
+    height: 70px;
+    width: 120px;
+    font-size: 1em;
+
+    font-weight: bold;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+#first-content-text-part button:hover {
+    cursor: grab;
+    box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+#first-content-text-part h2 {
+    text-align: start;
+}
+
+footer {
+    position: relative;
+    text-align: center;
+    background-color: var(--overskrift-farve);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/*SLIDESHOWFIs */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--primær-font);
+}
+
+.mySlides {
+    display: none;
+}
+
+img {
+    vertical-align: middle;
+}
+
+/* Slideshow container */
+.slideshow-container {
+    margin-left: 50px;
+    max-width: 1000px;
+    position: relative;
+    text-align: center;
+}
+
+.slideshow-container img {
+    border-radius: 5%;
+    width: 850px;
+    height: 600px;
+}
+
+
+/* Caption text */
+.text {
+    color: var(--sekundær-farve);
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+    color: var(--sekundær-farve);
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    margin-left: 50px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active {
+    background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+    to {
+        opacity: 1
+    }
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+    .text {
+        font-size: 11px
+    }
+}
+
+/* Starttilstand (form er skjult) */
+/* Starttilstand: Form er skjult */
+.add-form {
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+}
+
+/* Når formen vises */
+.add-form.show {
+    display: block;
+    max-height: 800px;
+    opacity: 1;
+}
+
+/* Knappen */
+.toggle-btn {
+    background-color: var(--sekundær-farve);
+    color: var(--tekst-farve);
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.toggle-btn:hover {
+    background-color: var(--primær-farve);
+}
+
+
+
+
+
+

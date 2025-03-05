@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tourist Guide - Find og gem dine yndlings turistattraktioner.">
+    <meta name="keywords" content="turisme, guide, attraktioner, rejser, sightseeing">
+    <meta name="author" content="Tourist Guide Team">
+
+    <title>Tourist Guide</title>
+
+
+    <link rel="icon" th:href="@{/images/favicon.webp}" type="image/webp">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/images/favicon.webp">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">
+                <img id="logobillede" src="/images/favicon.webp" alt="Logobillede">
+            </a></li>
+            <li><a th:href="@{/attractions}">Se Attraktioner</a></li>
+            <li><a th:href="@{/attractions/add}">Tilføj Attraktion</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <form th:action="@{/attractions/update}" method="post" class="edit-form">
+        <label for="name">Navn:</label>
+        <input id="name"  class="form-input" name="name" th:value="${attraction.name}">
+
+        <label for="city">By:</label>
+        <select id="city" name="city" class="form-input">
+            <option th:each="city : ${cities}" th:value="${city}" th:text="${city.getScreenName()}"
+                    th:selected="${city == attraction.city}"></option>
+        </select>
+
+        <label for="tags">Kategorier:</label>
+        <select id="tags" name="tags" multiple class="form-input">
+            <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getScreenName()}"
+                    th:selected="${#arrays.contains(attraction.tags, tag)}"></option>
+        </select>
+
+        <label for="description">Beskrivelse:</label>
+        <textarea id="description" name="description" class="form-input" th:text="${attraction.description}"></textarea>
+
+
+        <input type="hidden" id="id" name="id" th:value="${attraction.id}">
+
+        <button type="submit" class="btn">Opdater Attraktion</button>
+    </form>
+
+</main>
+
+</body>
+
+<footer>
+    <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> Tourist Guide. Alle rettigheder forbeholdt.</p>
+    <p><a th:href="@{/contact}">Kontakt os</a> | <a th:href="@{/about}">Om os</a></p>
+    <p>Gruppe 2: <br> Andreas, <br>Gustavo, <br>Daniel, <br> Frederik.</p>
+</footer>
+
+</html>
