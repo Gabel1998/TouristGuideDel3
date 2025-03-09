@@ -1,10 +1,9 @@
 package com.example.touristguidedel3.Repository;
 
-
-import mrrock.com.touristguidedel2.Model.Cities;
-import mrrock.com.touristguidedel2.Model.Tags;
-import mrrock.com.touristguidedel2.Model.Touristattraction;
+import com.example.touristguidedel3.Model.Tags;
+import com.example.touristguidedel3.Model.Touristattraction;
 import org.springframework.stereotype.Repository;
+import com.example.touristguidedel3.Model.Cities;
 
 import java.util.ArrayList;
 import java.util.List;

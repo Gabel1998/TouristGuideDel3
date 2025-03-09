@@ -1,9 +1,9 @@
 package com.example.touristguidedel3.Service;
 
 
-import mrrock.com.touristguidedel2.Model.Tags;
-import mrrock.com.touristguidedel2.Model.Touristattraction;
-import mrrock.com.touristguidedel2.Repository.TouristattractionRepository;
+import com.example.touristguidedel3.Model.Tags;
+import com.example.touristguidedel3.Model.Touristattraction;
+import com.example.touristguidedel3.Repository.TouristattractionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
