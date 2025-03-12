@@ -7,17 +7,16 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
-  
   pull_request:
     branches:
-      - main  # Triggeres når en PR oprettes eller opdateres mod main
+      - main  # Kører ved PR til main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read # Required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -28,8 +27,17 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Build with Maven (without running tests)
+        run: mvn clean package -DskipTests
+
+      - name: Run Unit Tests
+        run: mvn test
+
+      - name: Publish Surefire Test Report
+        if: success() || failure()  # Kører rapport uanset testresultat
+        uses: scacap/action-surefire-report@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -44,8 +52,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write # Required for JWT request
+      contents: read # Required for actions/checkout
   
     steps:
       - name: Download artifact from build job
@@ -67,4 +75,3 @@ jobs:
           app-name: 'TouristGuideDel3'
           slot-name: 'Production'
           package: '*.jar'
-          
