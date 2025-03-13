@@ -1,89 +1,112 @@
 package com.example.touristguidedel3.Repository;
 
-import com.example.touristguidedel3.Model.Tags;
 import com.example.touristguidedel3.Model.Touristattraction;
+import com.example.touristguidedel3.Model.Tag;
+import com.example.touristguidedel3.RowMappers.TouristAttractionRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import com.example.touristguidedel3.Model.Cities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class TouristattractionRepository {
-    private List<Touristattraction> touristattractionList = new ArrayList<>();
 
+    private final JdbcTemplate jdbcTemplate;
 
-    private Tags[] testTags = {Tags.BIOGRAF,Tags.KULTURELT};
-
-    public TouristattractionRepository() {
-
-        touristattractionList.add(new Touristattraction("Tivoli", "Forlystelsespark i hjertet af København", new Tags[]{Tags.KULTURELT, Tags.BØRNEVENLIG}, Cities.KOBENHAVN));
-        touristattractionList.add(new Touristattraction("Den Lille Havfrue", "Ikonisk statue ved Langelinie", new Tags[]{Tags.HISTORISK, Tags.GRATIS}, Cities.KOBENHAVN));
-        touristattractionList.add(new Touristattraction("Legoland", "Temapark med LEGO-tema", new Tags[]{Tags.BØRNEVENLIG, Tags.KULTURELT}, Cities.BILLUND));
-        touristattractionList.add(new Touristattraction("Aros Kunstmuseum", "Moderne kunstmuseum", new Tags[]{Tags.KULTURELT, Tags.MUSEUM}, Cities.AARHUS));
-        touristattractionList.add(new Touristattraction("Skagen Gren", "Danmarks nordligste punkt", new Tags[]{Tags.NATUR, Tags.GRATIS}, Cities.SKAGEN));
+    public TouristattractionRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-
-    // GET All Attractions
-    public List<Touristattraction> getAllAttractions(){
-        return touristattractionList;
+    // Henter alle attractions (evt. join til city)
+    public List<Touristattraction> getAllAttractions() {
+        // JOIN til city for at få CityName med
+        String sql = """
+            SELECT a.*, c.CityName
+            FROM attractions a
+            JOIN cities c ON a.CityID = c.CityID
+        """;
+        return jdbcTemplate.query(sql, new TouristAttractionRowMapper());
     }
 
-    // POST Save Attraction
-    public Touristattraction saveAttraction(Touristattraction touristattraction){
-        touristattractionList.add(touristattraction);
-        return touristattraction;
+    // Hent én attraction via ID
+    public Touristattraction getAttractionById(int id) {
+        String sql = """
+            SELECT a.*, c.CityName
+            FROM attractions a
+            JOIN cities c ON a.CityID = c.CityID
+            WHERE a.AttractionID = ?
+        """;
+        List<Touristattraction> results = jdbcTemplate.query(sql, new TouristAttractionRowMapper(), id);
+        return results.isEmpty() ? null : results.get(0);
     }
 
-    // GET Attraction Tags
-    public List<Tags> getAttractionsTags(String name) {
-        List<Tags> foundTags = new ArrayList<>();
-        for (Touristattraction attractions : touristattractionList) {
-            if (attractions.getName().equalsIgnoreCase(name)) {
-                for (Tags t : attractions.getTags()) {
-                    foundTags.add(t);
-                }
-            }
-
-        }
-        return foundTags;
-    }
-
-    // POST Update Attraction
-    public Touristattraction updateAttraction(Touristattraction touristattraction) {
-        for (Touristattraction attraction : touristattractionList) {
-            if (attraction.getId().equals(touristattraction.getId())) {
-                attraction.setDescription(touristattraction.getDescription());
-                attraction.setName(touristattraction.getName());
-                attraction.setTags(touristattraction.getTags());
-                attraction.setCity(touristattraction.getCity());
-                return attraction;
-            }
-        }
-        return null;
-    }
-
-    // GET Attraction By Name
+    // Evt. hent en attraction via Name
     public Touristattraction getAttractionByName(String name) {
-        for (Touristattraction t :touristattractionList) {
-            if (name.equalsIgnoreCase(t.getName())){
-                return t;
-            }
-        }
-        return null;
+        String sql = """
+            SELECT a.*, c.CityName
+            FROM attractions a
+            JOIN cities c ON a.CityID = c.CityID
+            WHERE a.AttractionName = ?
+        """;
+        List<Touristattraction> results = jdbcTemplate.query(sql, new TouristAttractionRowMapper(), name);
+        if (results.isEmpty()) return null;
+        Touristattraction touristattraction = results.get(0);
+
+        int attractionId = touristattraction.getId();  /*henter og sætter tags for denne attraction*/
+        List<Tag> tags = getAttractionsTags(attractionId);
+        touristattraction.setTags(tags);
+
+        return touristattraction;
+
     }
 
-    // POST Delete Attraction
+    // Gem en ny attraction (uden at returnere genereret PK)
+    public Touristattraction saveAttraction(Touristattraction t) {
+        String sql = """
+            INSERT INTO attractions (AttractionName, AttractionDescription, CityID)
+            VALUES (?,?,?)
+        """;
+        jdbcTemplate.update(sql, t.getName(), t.getDescription(), t.getCity().getCityId());
+        return t;
+    }
+
+    // Opdater en attraction
+    public Touristattraction updateAttraction(Touristattraction t) {
+        String sql = """
+            UPDATE attractions
+            SET AttractionName = ?, AttractionDescription = ?, CityID = ?
+            WHERE AttractionID = ?
+        """;
+        jdbcTemplate.update(sql, t.getName(), t.getDescription(), t.getCity().getCityId(), t.getId());
+        return t;
+    }
+
+    // Slet en attraction
     public Touristattraction deleteAttraction(String name) {
-        Touristattraction temp = null;
-        for (Touristattraction t : touristattractionList) {
-            if (t.getName().equalsIgnoreCase(name)) {
-                temp = t;
-                touristattractionList.remove(t);
-                return temp;
-            }
+        // Find den først, så vi kan returnere det slettede obj
+        Touristattraction toDelete = getAttractionByName(name);
+        if (toDelete != null) {
+            String sql = "DELETE FROM attractions WHERE AttractionName = ?";
+            jdbcTemplate.update(sql, name);
         }
-        return temp;
+        return toDelete;
+    }
+
+    // Hent de tags, der hører til en attraction (forudsat en join-tabel attraction_tags)
+    public List<Tag> getAttractionsTags(int attractionId) {
+        String sql = """
+            SELECT t.*
+            FROM tags t
+            JOIN attraction_tags at ON t.TagID = at.TagID
+            WHERE at.AttractionID = ?
+        """;
+        // Genbrug TagRowMapper
+        return jdbcTemplate.query(sql, new com.example.touristguidedel3.RowMappers.TagRowMapper(), attractionId);
+    }
+
+    // Tilføj et tag til en attraction (fx i en koblingstabel)
+    public void addTagToAttraction(int attractionId, int tagId) {
+        String sql = "INSERT INTO attraction_tags (AttractionID, TagID) VALUES (?, ?)";
+        jdbcTemplate.update(sql, attractionId, tagId);
     }
 }

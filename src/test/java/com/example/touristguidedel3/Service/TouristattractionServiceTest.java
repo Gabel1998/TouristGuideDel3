@@ -1,7 +1,7 @@
 package com.example.touristguidedel3.Service;
 
-import com.example.touristguidedel3.Model.Cities;
-import com.example.touristguidedel3.Model.Tags;
+import com.example.touristguidedel3.Model.City;
+import com.example.touristguidedel3.Model.Tag;
 import com.example.touristguidedel3.Model.Touristattraction;
 import com.example.touristguidedel3.Repository.TouristattractionRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,22 +27,28 @@ class TouristattractionServiceTest {
     private TouristattractionService touristattractionService;
 
     private Touristattraction mockAttraction;
+    private City mockCity;
+    private List<Tag> mockTags;
 
     @BeforeEach
     void setUp() {
-        // Opretter en attraktion i en dansk by med tags
-        mockAttraction = new Touristattraction(
-                "Den Lille Havfrue",
-                "Kendt statue i København",
-                new Tags[]{Tags.HISTORISK, Tags.KULTURELT},
-                Cities.KOBENHAVN // Dansk by
-        );
+        // Opret en mock City fra databasen
+        mockCity = new City(1, "København");
 
+        // Opret mock Tags fra databasen
+        Tag tag1 = new Tag(1, "Historisk");
+        Tag tag2 = new Tag(2, "Kulturelt");
+        mockTags = Arrays.asList(tag1, tag2);
+
+        // Opret en mock attraction
+        mockAttraction = new Touristattraction(1, "Den Lille Havfrue", "Kendt statue i København", mockCity, mockTags);
+
+        // Mock repository-metoder
         lenient().when(touristattractionRepository.getAttractionByName("Den Lille Havfrue"))
                 .thenReturn(mockAttraction);
 
-        lenient().when(touristattractionRepository.getAttractionsTags("Den Lille Havfrue"))
-                .thenReturn(Arrays.asList(Tags.HISTORISK, Tags.KULTURELT));
+        lenient().when(touristattractionRepository.getAttractionsTags(mockAttraction.getId()))
+                .thenReturn(mockTags);
 
         lenient().when(touristattractionRepository.getAllAttractions())
                 .thenReturn(Arrays.asList(mockAttraction));
@@ -62,20 +68,20 @@ class TouristattractionServiceTest {
         Touristattraction result = touristattractionService.getAttractionByName("Den Lille Havfrue");
         assertNotNull(result);
         assertEquals("Den Lille Havfrue", result.getName());
-        assertEquals(Cities.KOBENHAVN, result.getCity()); // Tjekker city
-        assertArrayEquals(new Tags[]{Tags.HISTORISK, Tags.KULTURELT}, result.getTags()); // Tjekker tags
+        assertEquals(mockCity, result.getCity()); // Tjekker city
+        assertEquals(mockTags, result.getTags()); // Tjekker tags
         verify(touristattractionRepository, times(1)).getAttractionByName("Den Lille Havfrue");
     }
 
     @Test
     void testGetAttractionsTags() {
-        List<Tags> tags = touristattractionService.getAttractionsTags("Den Lille Havfrue");
+        List<Tag> tags = touristattractionService.getAttractionsTags(mockAttraction.getId());
         assertNotNull(tags);
         assertFalse(tags.isEmpty());
         assertEquals(2, tags.size()); // Forventer 2 tags
-        assertTrue(tags.contains(Tags.HISTORISK));
-        assertTrue(tags.contains(Tags.KULTURELT));
-        verify(touristattractionRepository, times(1)).getAttractionsTags("Den Lille Havfrue");
+        assertTrue(tags.contains(mockTags.get(0)));
+        assertTrue(tags.contains(mockTags.get(1)));
+        verify(touristattractionRepository, times(1)).getAttractionsTags(mockAttraction.getId());
     }
 
     @Test
@@ -84,8 +90,8 @@ class TouristattractionServiceTest {
         assertNotNull(attractions);
         assertFalse(attractions.isEmpty());
         assertEquals("Den Lille Havfrue", attractions.get(0).getName());
-        assertEquals(Cities.KOBENHAVN, attractions.get(0).getCity());
-        assertArrayEquals(new Tags[]{Tags.HISTORISK, Tags.KULTURELT}, attractions.get(0).getTags());
+        assertEquals(mockCity, attractions.get(0).getCity());
+        assertEquals(mockTags, attractions.get(0).getTags());
         verify(touristattractionRepository, times(1)).getAllAttractions();
     }
 
@@ -94,8 +100,8 @@ class TouristattractionServiceTest {
         Touristattraction result = touristattractionService.saveAttraction(mockAttraction);
         assertNotNull(result);
         assertEquals("Den Lille Havfrue", result.getName());
-        assertEquals(Cities.KOBENHAVN, result.getCity());
-        assertArrayEquals(new Tags[]{Tags.HISTORISK, Tags.KULTURELT}, result.getTags());
+        assertEquals(mockCity, result.getCity());
+        assertEquals(mockTags, result.getTags());
         verify(touristattractionRepository, times(1)).saveAttraction(mockAttraction);
     }
 
@@ -104,8 +110,8 @@ class TouristattractionServiceTest {
         Touristattraction result = touristattractionService.updateAttraction(mockAttraction);
         assertNotNull(result);
         assertEquals("Den Lille Havfrue", result.getName());
-        assertEquals(Cities.KOBENHAVN, result.getCity());
-        assertArrayEquals(new Tags[]{Tags.HISTORISK, Tags.KULTURELT}, result.getTags());
+        assertEquals(mockCity, result.getCity());
+        assertEquals(mockTags, result.getTags());
         verify(touristattractionRepository, times(1)).updateAttraction(mockAttraction);
     }
 

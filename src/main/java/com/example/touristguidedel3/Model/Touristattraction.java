@@ -1,58 +1,44 @@
 package com.example.touristguidedel3.Model;
 
-
-import java.util.UUID;
+import java.util.List;
 
 public class Touristattraction {
-    private UUID id =  UUID.randomUUID();
+
+    private int id;
     private String name;
     private String description;
-    private Tags[] tags;
-    private Cities city;
+    private City city;
+    private List<Tag> tags;
 
-    public Cities getCity() {
-        return city;
-    }
+    public Touristattraction() {}
 
-    public void setCity(Cities city) {
+    public Touristattraction(int id, String name, String description, City city) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
         this.city = city;
     }
 
-    public Touristattraction() {
-    }
-
-    public Touristattraction(String name, String description) {
+    public Touristattraction(int id, String name, String description, City city, List<Tag> tags) {
+        this.id = id;
         this.name = name;
         this.description = description;
-    }
-
-
-
-    public Touristattraction(String name, String description, Tags[] tags) {
-        this.name = name;
-        this.description = description;
-        this.tags = tags;
-    }
-    public Touristattraction(String name, String description, Tags[] tags, Cities city) {
-        this.name = name;
-        this.description = description;
-        this.tags = tags;
         this.city = city;
+        this.tags = tags;
     }
 
+    // Getters / Setters
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
-
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -60,16 +46,23 @@ public class Touristattraction {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Tags[] getTags() {
+    public City getCity() {
+        return city;
+    }
+    public void setCity(City city) {
+        this.city = city;
+
+    }
+
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Tags[] tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 }
