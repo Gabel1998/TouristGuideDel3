@@ -1,5 +1,6 @@
 Create DATABASE touristGuideDB;
 USE touristGuideDB;
+
 CREATE TABLE cities (
 CityName varchar(30) not null,
 CityID int AUTO_INCREMENT PRIMARY KEY 
