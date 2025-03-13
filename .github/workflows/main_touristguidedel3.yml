@@ -15,10 +15,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:      contents: read
+    permissions:     
+      contents: read
       checks: write
       pull-requests: write  # Nødvendigt for at poste Surefire rapport til PR
-      contents: read # Required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
