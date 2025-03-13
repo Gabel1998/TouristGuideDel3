@@ -1,6 +1,7 @@
 package com.example.touristguidedel3.Controller;
 
 import com.example.touristguidedel3.Model.Cities;
+import com.example.touristguidedel3.Model.Tag;
 import com.example.touristguidedel3.Model.Tags;
 import com.example.touristguidedel3.Model.Touristattraction;
 import com.example.touristguidedel3.Service.TouristattractionService;
@@ -34,8 +35,13 @@ public class TouristattractionController {
     // GET Attraction Tags
     @GetMapping("/attractions/{name}/tags")
     public String getAttractionsTags(@PathVariable String name, Model model) {
-        List<Tags> listOfTags = touristattractionService.getAttractionsTags(name);
         Touristattraction touristattraction = touristattractionService.getAttractionByName(name);
+        if (touristattraction == null) {
+            return "redirect:/attractions";
+        }
+
+        List<Tag> listOfTags = touristattractionService.getAttractionsTags(touristattraction.getId());
+
         if (listOfTags.isEmpty()){
             model.addAttribute("tagList","Ikke nogle tags");
             model.addAttribute("attraction",touristattraction);
