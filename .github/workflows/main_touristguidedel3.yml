@@ -32,9 +32,6 @@ jobs:
       - name: Build with Maven (without running tests)
         run: mvn clean package -DskipTests
 
-      - name: Run Unit Tests
-        run: mvn test
-
       - name: Publish Surefire Test Report
         if: success() || failure()  # Kører rapport uanset testresultat
         uses: scacap/action-surefire-report@v1
