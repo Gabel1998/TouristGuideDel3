@@ -38,8 +38,10 @@
 
         <label for="city">By:</label>
         <select id="city" name="city" class="form-input">
-            <option th:each="city : ${cities}" th:value="${city}" th:text="${city.getCityName()}"
-                    th:selected="${city.getCityId() == attraction.getCity().getCityId()}"></option>
+            <option th:each="city : ${cities}" th:value="${city.getCityId()}" th:text="${city.getCityName()}"
+                    th:selected="${city.getCityId() == attraction.getCity().getCityId()}">
+
+            </option>
         </select>
 
         <label for="tags">Kategorier:</label>
