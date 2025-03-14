@@ -34,18 +34,23 @@
 <main>
     <form th:action="@{/attractions/update}" method="post" class="edit-form">
         <label for="name">Navn:</label>
-        <input id="name"  class="form-input" name="name" th:value="${attraction.name}">
+        <input id="name"  class="form-input" name="name" th:value="${attraction.getName()}">
 
         <label for="city">By:</label>
         <select id="city" name="city" class="form-input">
-            <option th:each="city : ${cities}" th:value="${city}" th:text="${city.getCityName()}"
-                    th:selected="${city == attraction.city}"></option>
+            <option th:each="city : ${cities}" th:value="${city.getCityId()}" th:text="${city.getCityName()}"
+                    th:selected="${city.getCityId() == attraction.getCity().getCityId()}">
+
+            </option>
         </select>
 
         <label for="tags">Kategorier:</label>
         <select id="tags" name="tags" multiple class="form-input">
-            <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getTagName()}"
-                    th:selected="${#arrays.contains(attraction.tags, tag)}"></option>
+            <option th:each="tag : ${tags}"
+                    th:value="${tag.getTagId()}"
+                    th:text="${tag.getTagName()}"
+                    th:selected="${attraction.getTags().![getTagId()].contains(tag.getTagId())}">
+            </option>
         </select>
 
         <label for="description">Beskrivelse:</label>

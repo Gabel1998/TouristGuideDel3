@@ -1,5 +1,6 @@
 package com.example.touristguidedel3.Controller;
 
+import com.example.touristguidedel3.Model.City;
 import com.example.touristguidedel3.Model.Tag;
 import com.example.touristguidedel3.Model.Touristattraction;
 import com.example.touristguidedel3.Service.CityService;
