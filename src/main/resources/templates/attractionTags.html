@@ -26,7 +26,7 @@
                 <h2 th:text="${attraction.getName() + ' tags'}"></h2>
             </div>
             <div th:each="tag : ${tagList}">
-                <p th:text="${tagList.indexOf(tag)+1} + '. ' + ${tag.screenName}"></p>
+                <p th:text="${tagList.indexOf(tag)+1} + '. ' + ${tag.getTagName()}"></p>
             </div>
         </div>
 
