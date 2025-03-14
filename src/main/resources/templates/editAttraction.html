@@ -44,8 +44,11 @@
 
         <label for="tags">Kategorier:</label>
         <select id="tags" name="tags" multiple class="form-input">
-            <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getTagName()}"
-                    th:selected="${#arrays.contains(attraction.tags, tag)}"></option>
+            <option th:each="tag : ${tags}"
+                    th:value="${tag.getTagId()}"
+                    th:text="${tag.getTagName()}"
+                    th:selected="${attraction.getTags().![getTagId()].contains(tag.getTagId())}">
+            </option>
         </select>
 
         <label for="description">Beskrivelse:</label>
