@@ -18,7 +18,9 @@ import java.util.List;
 public class TouristattractionController {
     @Autowired
     private TouristattractionService  touristattractionService;
+    @Autowired
     private TagService tagService;
+    @Autowired
     private CityService cityService;
 
     // GET All Attractions
@@ -86,7 +88,7 @@ public class TouristattractionController {
     @PostMapping("/attractions/delete/{name}")
     public String deleteAttraction(@PathVariable String name) {
         touristattractionService.deleteAttraction(name);
-        return "redirect:/a ttractions";
+        return "redirect:/attractions";
     }
 
     @GetMapping("/attractions/edit/{name}")
