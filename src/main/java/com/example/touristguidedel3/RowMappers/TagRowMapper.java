@@ -9,8 +9,8 @@ public class TagRowMapper implements RowMapper<Tag> {
     @Override
     public Tag mapRow(ResultSet rs, int rowNum) throws SQLException {
         Tag tag = new Tag();
-        tag.setTagId(rs.getInt("TagID"));
-        tag.setTagName(rs.getString("TagName"));
+        tag.setTagId(rs.getInt("TagsID"));
+        tag.setTagName(rs.getString("Tag"));
         return tag;
     }
 }

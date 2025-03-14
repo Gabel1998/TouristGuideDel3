@@ -38,13 +38,13 @@
 
         <label for="city">By:</label>
         <select id="city" name="city" class="form-input">
-            <option th:each="city : ${cities}" th:value="${city}" th:text="${city.getScreenName()}"
+            <option th:each="city : ${cities}" th:value="${city}" th:text="${city.getCityName()}"
                     th:selected="${city == attraction.city}"></option>
         </select>
 
         <label for="tags">Kategorier:</label>
         <select id="tags" name="tags" multiple class="form-input">
-            <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getScreenName()}"
+            <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getTagName()}"
                     th:selected="${#arrays.contains(attraction.tags, tag)}"></option>
         </select>
 

@@ -2,18 +2,18 @@ Create DATABASE touristGuideDB;
 USE touristGuideDB;
 
 CREATE TABLE cities (
-CityName varchar(30) not null,
+CityName varchar(30) not null unique,
 CityID int AUTO_INCREMENT PRIMARY KEY 
 );
 
 CREATE TABLE tags(
 TagsID int AUTO_INCREMENT PRIMARY KEY,
-Tag varchar(30) not null
+Tag varchar(30) not null unique
 );
 
 
 CREATE TABLE attractions (
-    AttractionName VARCHAR(30) not null,
+    AttractionName VARCHAR(30) not null unique,
     AttractionDescription VARCHAR(250),
 	CityID int,
     AttractionID int AUTO_INCREMENT PRIMARY KEY,

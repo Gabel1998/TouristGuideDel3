@@ -47,7 +47,7 @@
         <tbody th:each="attraction : ${attractionList}">
         <tr>
            <td th:text="${attraction.name}"></td>
-            <td th:text="${attraction.getCity().getScreenName()}"></td>
+            <td th:text="${attraction.getCity().getCityName()}"></td>
             <td th:text="${attraction.getDescription()}"></td>
             <td>
                 <a th:href="@{'/attractions/' + ${attraction.name} + '/tags'} " class="btn-link">Tags</a>

@@ -97,8 +97,8 @@ public class TouristattractionRepository {
         String sql = """
             SELECT t.*
             FROM tags t
-            JOIN attraction_tags at ON t.TagID = at.TagID
-            WHERE at.AttractionID = ?
+            JOIN attraction_tags at ON t.TagsID = at.TagsID
+            WHERE at.AttractionsAttractionID = ?
         """;
         // Genbrug TagRowMapper
         return jdbcTemplate.query(sql, new com.example.touristguidedel3.RowMappers.TagRowMapper(), attractionId);

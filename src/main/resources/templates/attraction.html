@@ -35,12 +35,12 @@
 <main>
     <section class="attraction-card">
         <div class="attraction-card-left">
-            <h1 th:text="${attraction.name} + ' i ' + ${attraction.getCity().getScreenName() +', Danmark'}"></h1>
+            <h1 th:text="${attraction.name} + ' i ' + ${attraction.getCity().getCityName() +', Danmark'}"></h1>
             <p th:text="${attraction.getDescription()}"></p>
         </div>
         <div th:each="tag : ${attraction.getTags()}" class="attraction-card-right">
             <div>
-                <p th:text="${tag.getScreenName()}"></p>
+                <p th:text="${tag.getTagName()}"></p>
             </div>
         </div>
 

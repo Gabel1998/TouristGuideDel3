@@ -42,12 +42,12 @@
 
         <label for="city">Vælg by:</label>
         <select id="city" name="city">
-            <option th:each="city : ${cities}" th:value="${city}" th:text="${city.getScreenName()}"></option>
+            <option th:each="city : ${cities}" th:value="${city}" th:text="${city.getCityName()}"></option>
         </select>
 
         <label for="tags">Vælg kategorier:</label>
         <select id="tags" name="tags" multiple>
-            <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getScreenName()}"></option>
+            <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getTagName()}"></option>
         </select>
 
         <label for="description">Beskrivelse:</label>
@@ -73,7 +73,7 @@
         <tbody th:each="attraction : ${attractionList}">
         <tr>
             <td th:text="${attraction.name}">Attraktion Navn</td>
-            <td th:text="${attraction.getCity().getScreenName()}">Attraktion By</td>
+            <td th:text="${attraction.getCity().getCityName()}">Attraktion By</td>
             <td th:text="${attraction.getDescription()}">Attraktion Beskrivelse</td>
             <td>
                 <a th:href="@{'/attractions/edit/' + ${attraction.name}}" class="btn-link">Rediger</a>
