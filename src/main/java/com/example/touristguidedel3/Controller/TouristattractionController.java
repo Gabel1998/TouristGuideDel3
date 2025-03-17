@@ -1,8 +1,10 @@
 package com.example.touristguidedel3.Controller;
 
+import com.example.touristguidedel3.DTO.TouristAttractionDTO;
 import com.example.touristguidedel3.Model.City;
 import com.example.touristguidedel3.Model.Tag;
 import com.example.touristguidedel3.Model.Touristattraction;
+import com.example.touristguidedel3.Repository.CityRepository;
 import com.example.touristguidedel3.Service.CityService;
 import com.example.touristguidedel3.Service.TagService;
 import com.example.touristguidedel3.Service.TouristattractionService;
@@ -23,6 +25,8 @@ public class TouristattractionController {
     private TagService tagService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private CityRepository cityRepository;
 
     // GET All Attractions
     @GetMapping("/attractions")
@@ -79,7 +83,24 @@ public class TouristattractionController {
     // POST Update Attraction
     //Har ændret lidt i metoden, da den før brugte RequestBody, men nu bruger ModelAttribute, fordi en <form> ikke er komaptiable med RequestBody
     @PostMapping("/attractions/update")
-    public String updateAttractions(@ModelAttribute Touristattraction touristattraction) {
+    public String updateAttractions(@ModelAttribute TouristAttractionDTO touristAttractionDTO) {
+Touristattraction touristattraction = new Touristattraction();
+touristattraction.setId(touristAttractionDTO.getId());
+touristattraction.setName(touristAttractionDTO.getName());
+touristattraction.setDescription(touristAttractionDTO.getDescription());
+
+City city = cityService.findCityByID(touristAttractionDTO.getCityID());
+touristattraction.setCity(city);
+
+List<Tag> tagList = new ArrayList<>();
+if (touristAttractionDTO.getTagsID() != null){
+    for (int id : touristAttractionDTO.getTagsID()){
+        tagList.add(tagService.findTagById(id));
+    }
+}
+
+touristattraction.setTags(tagList);
+
         touristattractionService.updateAttraction(touristattraction);
         return "redirect:/attractions/add"; // Tilbage til administrationssiden efter opdatering
     }

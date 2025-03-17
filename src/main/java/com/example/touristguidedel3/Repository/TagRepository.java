@@ -22,7 +22,7 @@ public class TagRepository {
     }
 
     public Tag findTagById(int tagId) {
-        String sql = "SELECT * FROM tags WHERE TagID = ?";
+        String sql = "SELECT * FROM tags WHERE TagsID = ?";
         List<Tag> results = jdbcTemplate.query(sql, new TagRowMapper(), tagId);
         return results.isEmpty() ? null : results.get(0);
     }

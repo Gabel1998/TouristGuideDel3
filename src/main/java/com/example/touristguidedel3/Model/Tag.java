@@ -1,5 +1,8 @@
 package com.example.touristguidedel3.Model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Tag {
 
     private int tagId;
@@ -7,7 +10,9 @@ public class Tag {
 
     public Tag() {}
 
-    public Tag(int tagId, String tagName) {
+
+
+    public Tag(int tagId,String tagName) {
         this.tagId = tagId;
         this.tagName = tagName;
     }

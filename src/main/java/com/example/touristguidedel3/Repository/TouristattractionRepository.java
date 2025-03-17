@@ -72,9 +72,9 @@ public class TouristattractionRepository {
 
     // Opdater en attraction
     public Touristattraction updateAttraction(Touristattraction t) {
-        String deleteTagsSql = "DELETE FROM attraction_tags WHERE AttractionID = ?";
+        String deleteTagsSql = "DELETE FROM attraction_tags WHERE AttractionsAttractionID = ?";
         jdbcTemplate.update(deleteTagsSql, t.getId());
-        String insertTagsSql = "INSERT INTO attraction_tags (AttractionID, TagID) VALUES (?, ?)";
+        String insertTagsSql = "INSERT INTO attraction_tags (AttractionsAttractionID, TagsID) VALUES (?, ?)";
 
         for (Tag tag : t.getTags()) {
             jdbcTemplate.update(insertTagsSql, t.getId(), tag.getTagId());
