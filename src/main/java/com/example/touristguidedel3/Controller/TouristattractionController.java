@@ -25,9 +25,6 @@ public class TouristattractionController {
     private TagService tagService;
     @Autowired
     private CityService cityService;
-    @Autowired
-    private CityRepository cityRepository;
-
     // GET All Attractions
     @GetMapping("/attractions")
     public String getAllAttractions(Model model){
@@ -65,7 +62,21 @@ public class TouristattractionController {
 
     // POST Save Attraction
     @PostMapping("/attractions/save")
-    public String saveAttraction(@ModelAttribute Touristattraction touristattraction){
+    public String saveAttraction(@ModelAttribute TouristAttractionDTO touristattractionDTO){
+        Touristattraction touristattraction = new Touristattraction();
+        touristattraction.setName(touristattractionDTO.getName());
+        touristattraction.setDescription(touristattractionDTO.getDescription());
+        touristattraction.setCity(cityService.findCityByID(touristattractionDTO.getCityID()));
+
+        List<Tag> tagList = new ArrayList<>();
+        if (touristattractionDTO.getTagsID() != null){
+            for (int id : touristattractionDTO.getTagsID()){
+                tagList.add(tagService.findTagById(id));
+            }
+        }
+
+        touristattraction.setTags(tagList);
+
             touristattractionService.saveAttraction(touristattraction);
         return "redirect:/attractions";
     }
@@ -74,7 +85,7 @@ public class TouristattractionController {
     @GetMapping("/attractions/add")
     public String showAddAttractionForm(Model model) {
         model.addAttribute("attractionList",touristattractionService.getAllAttractions());
-        model.addAttribute("attraction", new Touristattraction());
+        model.addAttribute("attraction", new TouristAttractionDTO());
         model.addAttribute("cities", cityService.findAllCities());
         model.addAttribute("tags", tagService.findAllTags()); // DB values skal ind her
         return "manage"; // Henviser til HTML-filen

@@ -40,14 +40,14 @@
         <label for="name">Navn:</label>
         <input type="text" id="name" name="name" required>
 
-        <label for="city">Vælg by:</label>
-        <select id="city" name="city">
-            <option th:each="city : ${cities}" th:value="${city}" th:text="${city.getCityName()}"></option>
+        <label for="cityID">Vælg by:</label>
+        <select id="cityID" name="cityID">
+            <option th:each="city : ${cities}" th:value="${city.getCityId()}" th:text="${city.getCityName()}"></option>
         </select>
 
-        <label for="tags">Vælg kategorier:</label>
-        <select id="tags" name="tags" multiple>
-            <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getTagName()}"></option>
+        <label for="tagsID">Vælg kategorier:</label>
+        <select id="tagsID" name="tagsID" multiple>
+            <option th:each="tag : ${tags}" th:value="${tag.getTagId()}" th:text="${tag.getTagName()}"></option>
         </select>
 
         <label for="description">Beskrivelse:</label>
@@ -89,7 +89,8 @@
 
 
 </main>
-<script th:src="@{/javascript/script.js}"></script>
+<script th:src="@{/javascript/script.js}">
+</script>
 </body>
 
 <footer>

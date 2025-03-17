@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS touristGuideDB;
 Create DATABASE touristGuideDB;
 USE touristGuideDB;
 
