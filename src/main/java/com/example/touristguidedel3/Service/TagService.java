@@ -15,4 +15,8 @@ public class TagService {
     public List<Tag> findAllTags() {
         return tagRepository.findAllTags(); // Henter tags fra databasen
     }
+
+    public Tag findTagById(int id){
+        return tagRepository.findTagById(id);
+    }
 }

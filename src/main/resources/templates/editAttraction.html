@@ -36,16 +36,16 @@
         <label for="name">Navn:</label>
         <input id="name"  class="form-input" name="name" th:value="${attraction.getName()}">
 
-        <label for="city">By:</label>
-        <select id="city" name="city" class="form-input">
+        <label for="cityID">By:</label>
+        <select id="cityID" name="cityID" class="form-input">
             <option th:each="city : ${cities}" th:value="${city.getCityId()}" th:text="${city.getCityName()}"
                     th:selected="${city.getCityId() == attraction.getCity().getCityId()}">
 
             </option>
         </select>
 
-        <label for="tags">Kategorier:</label>
-        <select id="tags" name="tags" multiple class="form-input">
+        <label for="tagsID">Kategorier:</label>
+        <select id="tagsID" name="tagsID" multiple class="form-input">
             <option th:each="tag : ${tags}"
                     th:value="${tag.getTagId()}"
                     th:text="${tag.getTagName()}"
@@ -54,7 +54,7 @@
         </select>
 
         <label for="description">Beskrivelse:</label>
-        <textarea id="description" name="description" class="form-input" th:text="${attraction.description}"></textarea>
+        <textarea id="description" name="description" class="form-input"  th:text="${attraction.getDescription()}"></textarea>
 
 
         <input type="hidden" id="id" name="id" th:value="${attraction.id}">

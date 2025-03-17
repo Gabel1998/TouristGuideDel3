@@ -4,8 +4,12 @@ import com.example.touristguidedel3.Model.Touristattraction;
 import com.example.touristguidedel3.Model.Tag;
 import com.example.touristguidedel3.RowMappers.TouristAttractionRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -66,15 +70,30 @@ public class TouristattractionRepository {
             INSERT INTO attractions (AttractionName, AttractionDescription, CityID)
             VALUES (?,?,?)
         """;
-        jdbcTemplate.update(sql, t.getName(), t.getDescription(), t.getCity().getCityId());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, t.getName());
+            ps.setString(2, t.getDescription());
+            ps.setInt(3, t.getCity().getCityId());
+            return ps;
+        }, keyHolder);
+        t.setId(keyHolder.getKey().intValue());
+        String sqlTags = """       
+            INSERT INTO attraction_tags (AttractionsAttractionID, TagsID)
+            VALUES (?,?)
+        """;
+        for (Tag tag : t.getTags()){
+            jdbcTemplate.update(sqlTags,t.getId(),tag.getTagId());
+        }
         return t;
     }
 
     // Opdater en attraction
     public Touristattraction updateAttraction(Touristattraction t) {
-        String deleteTagsSql = "DELETE FROM attraction_tags WHERE AttractionID = ?";
+        String deleteTagsSql = "DELETE FROM attraction_tags WHERE AttractionsAttractionID = ?";
         jdbcTemplate.update(deleteTagsSql, t.getId());
-        String insertTagsSql = "INSERT INTO attraction_tags (AttractionID, TagID) VALUES (?, ?)";
+        String insertTagsSql = "INSERT INTO attraction_tags (AttractionsAttractionID, TagsID) VALUES (?, ?)";
 
         for (Tag tag : t.getTags()) {
             jdbcTemplate.update(insertTagsSql, t.getId(), tag.getTagId());

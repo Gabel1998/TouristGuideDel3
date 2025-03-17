@@ -1,5 +1,8 @@
 package com.example.touristguidedel3.Model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class City {
 
     private int cityId;
@@ -9,6 +12,7 @@ public class City {
     public City() {}
 
     // Ekstra constructor, hvis du vil bruge den
+
     public City(int cityId, String cityName) {
         this.cityId = cityId;
         this.cityName = cityName;
