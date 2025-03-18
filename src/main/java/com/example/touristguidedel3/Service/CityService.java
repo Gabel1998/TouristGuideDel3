@@ -15,11 +15,11 @@ public class CityService {
     private CityRepository cityRepository;
 
     public List<City> findAllCities(){
-        return cityRepository.findAllCities();
+        return cityRepository.findAll();
     }
 
 
     public City findCityByID(int id){
-        return cityRepository.findCityById(id);
+        return cityRepository.findById(id);
     }
 }

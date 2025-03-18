@@ -13,10 +13,10 @@ public class TagService {
     private TagRepository tagRepository;
 
     public List<Tag> findAllTags() {
-        return tagRepository.findAllTags(); // Henter tags fra databasen
+        return tagRepository.findAll(); // Henter tags fra databasen
     }
 
     public Tag findTagById(int id){
-        return tagRepository.findTagById(id);
+        return tagRepository.findById(id);
     }
 }

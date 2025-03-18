@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class TouristattractionRepository {
+public class TouristattractionRepository implements ICrudOperations {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -22,7 +22,8 @@ public class TouristattractionRepository {
     }
 
     // Henter alle attractions (evt. join til city)
-    public List<Touristattraction> getAllAttractions() {
+    @Override
+    public List<Touristattraction> findAll() {
         // JOIN til city for at få CityName med
         String sql = """
             SELECT a.*, c.CityName
@@ -33,7 +34,8 @@ public class TouristattractionRepository {
     }
 
     // Hent én attraction via ID
-    public Touristattraction getAttractionById(int id) {
+    @Override
+    public Touristattraction findById(int id) {
         String sql = """
             SELECT a.*, c.CityName
             FROM attractions a

@@ -23,7 +23,7 @@ public class TouristattractionService {
     }
 
     public List<Touristattraction> getAllAttractions(){
-        return touristattractionRepository.getAllAttractions();
+        return touristattractionRepository.findAll();
     }
 
     public Touristattraction saveAttraction(Touristattraction touristattraction){

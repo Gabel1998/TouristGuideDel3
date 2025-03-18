@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class TagRepository {
+public class TagRepository implements ICrudOperations {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -16,12 +16,14 @@ public class TagRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Tag> findAllTags() {
+    @Override
+    public List<Tag> findAll() {
         String sql = "SELECT * FROM tags";
         return jdbcTemplate.query(sql, new TagRowMapper());
     }
 
-    public Tag findTagById(int tagId) {
+    @Override
+    public Tag findById(int tagId) {
         String sql = "SELECT * FROM tags WHERE TagsID = ?";
         List<Tag> results = jdbcTemplate.query(sql, new TagRowMapper(), tagId);
         return results.isEmpty() ? null : results.get(0);
