@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CityRepository {
+public class CityRepository implements ICrudOperations{
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -16,12 +16,14 @@ public class CityRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<City> findAllCities() {
+    @Override
+    public List<City> findAll() {
         String sql = "SELECT * FROM cities";
         return jdbcTemplate.query(sql, new CityRowMapper());
     }
 
-    public City findCityById(int cityId) {
+    @Override
+    public City findById(int cityId) {
         String sql = "SELECT * FROM cities WHERE CityID = ?";
         List<City> results = jdbcTemplate.query(sql, new CityRowMapper(), cityId);
         return results.isEmpty() ? null : results.get(0);
@@ -47,4 +49,6 @@ public class CityRepository {
         String sql = "DELETE FROM cities WHERE CityID = ?";
         jdbcTemplate.update(sql, cityId);
     }
+
+
 }
