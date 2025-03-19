@@ -1,9 +1,10 @@
-package com.example.touristguidedel3.Service;
+package com.example.touristguidedel3.Tests.Service;
 
 import com.example.touristguidedel3.Model.City;
 import com.example.touristguidedel3.Model.Tag;
 import com.example.touristguidedel3.Model.Touristattraction;
 import com.example.touristguidedel3.Repository.TouristattractionRepository;
+import com.example.touristguidedel3.Service.TouristattractionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,7 +51,7 @@ class TouristattractionServiceTest {
         lenient().when(touristattractionRepository.getAttractionsTags(mockAttraction.getId()))
                 .thenReturn(mockTags);
 
-        lenient().when(touristattractionRepository.getAllAttractions())
+        lenient().when(touristattractionRepository.findAll())
                 .thenReturn(Arrays.asList(mockAttraction));
 
         lenient().when(touristattractionRepository.saveAttraction(any(Touristattraction.class)))
@@ -92,7 +93,7 @@ class TouristattractionServiceTest {
         assertEquals("Den Lille Havfrue", attractions.get(0).getName());
         assertEquals(mockCity, attractions.get(0).getCity());
         assertEquals(mockTags, attractions.get(0).getTags());
-        verify(touristattractionRepository, times(1)).getAllAttractions();
+        verify(touristattractionRepository, times(1)).findAll();
     }
 
     @Test
