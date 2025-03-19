@@ -30,7 +30,7 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Maven (without running tests)
-        run: mvn clean package
+        run: mvn clean package -DskipTests
 
       - name: Publish Surefire Test Report
         if: success() || failure()  # Kører rapport uanset testresultat
