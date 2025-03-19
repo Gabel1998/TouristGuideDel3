@@ -1,7 +1,5 @@
 package com.example.touristguidedel3.Model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Tag {
 
