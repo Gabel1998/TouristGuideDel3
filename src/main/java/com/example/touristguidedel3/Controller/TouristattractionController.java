@@ -4,7 +4,6 @@ import com.example.touristguidedel3.DTO.TouristAttractionDTO;
 import com.example.touristguidedel3.Model.City;
 import com.example.touristguidedel3.Model.Tag;
 import com.example.touristguidedel3.Model.Touristattraction;
-import com.example.touristguidedel3.Repository.CityRepository;
 import com.example.touristguidedel3.Service.CityService;
 import com.example.touristguidedel3.Service.TagService;
 import com.example.touristguidedel3.Service.TouristattractionService;
