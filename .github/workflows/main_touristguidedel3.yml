@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy JAR app to Azure Web App - TouristGuideDel3
 
 on:
@@ -9,19 +6,20 @@ on:
       - main
   pull_request:
     branches:
-      - main  # Kører ved PR til main
+      - main  # Runs on PR to main
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:     
+    permissions:
       contents: read
       checks: write
-      pull-requests: write  # Nødvendigt for at poste Surefire rapport til PR
+      pull-requests: write  # Required to post Surefire report to PR
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
       - name: Set up Java version
         uses: actions/setup-java@v4
@@ -29,14 +27,23 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
 
-      - name: Build with Maven (without running tests)
-        run: mvn clean package -DskipTests
+      - name: Run Tests and Generate Reports
+        run: mvn clean test surefire-report:report-only
 
       - name: Publish Surefire Test Report
-        if: success() || failure()  # Kører rapport uanset testresultat
+        if: always()  # Runs report even if tests fail
         uses: scacap/action-surefire-report@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Test Reports as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/
+
+      - name: Build JAR (After Tests Pass)
+        run: mvn clean package
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -53,13 +60,13 @@ jobs:
     permissions:
       id-token: write # Required for JWT request
       contents: read # Required for actions/checkout
-  
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
