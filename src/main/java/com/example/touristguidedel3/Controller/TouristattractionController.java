@@ -18,17 +18,20 @@ import java.util.List;
 @Controller()
 @RequestMapping("")
 public class TouristattractionController {
+
+
+    private final TouristattractionService touristattractionService;
+    private final TagService tagService;
+    private final CityService cityService;
+
+    // Bemærk @Autowired på konstruktøren
     @Autowired
-    private TouristattractionService  touristattractionService;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private CityService cityService;
-    // GET All Attractions
-    @GetMapping("/attractions")
-    public String getAllAttractions(Model model){
-        model.addAttribute("attractionList",touristattractionService.getAllAttractions());
-        return "attractions";
+    public TouristattractionController(TouristattractionService touristattractionService,
+                                       TagService tagService,
+                                       CityService cityService) {
+        this.touristattractionService = touristattractionService;
+        this.tagService = tagService;
+        this.cityService = cityService;
     }
 
     // GET Attraction By Name
