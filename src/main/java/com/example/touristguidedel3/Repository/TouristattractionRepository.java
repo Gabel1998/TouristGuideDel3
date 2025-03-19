@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class TouristattractionRepository implements ICrudOperations {
@@ -80,7 +81,7 @@ public class TouristattractionRepository implements ICrudOperations {
             ps.setInt(3, t.getCity().getCityId());
             return ps;
         }, keyHolder);
-        t.setId(keyHolder.getKey().intValue());
+        t.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());
         String sqlTags = """       
             INSERT INTO attraction_tags (AttractionsAttractionID, TagsID)
             VALUES (?,?)
