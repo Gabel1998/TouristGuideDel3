@@ -9,8 +9,12 @@ import java.util.List;
 @Service
 public class TagService {
 
+    private final TagRepository tagRepository;
+
     @Autowired
-    private TagRepository tagRepository;
+    public TagService(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
 
     public List<Tag> findAllTags() {
         return tagRepository.findAll(); // Henter tags fra databasen

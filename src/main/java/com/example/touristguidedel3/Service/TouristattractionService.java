@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class TouristattractionService {
 
+    private final TouristattractionRepository touristattractionRepository;
+
     @Autowired
-    private TouristattractionRepository touristattractionRepository;
+    public TouristattractionService(TouristattractionRepository touristattractionRepository) {
+        this.touristattractionRepository = touristattractionRepository;
+    }
 
     public Touristattraction getAttractionByName(String name){
         return touristattractionRepository.getAttractionByName(name);
