@@ -67,6 +67,12 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8C83075F8B174EAC831B56E960F7DEF8 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CAD497F758A942B3BEB951C5F5CEB5DE }}
 
+      - name: Set environment variables
+        run: |
+          echo "PROD_DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> $GITHUB_ENV
+          echo "PROD_USERNAME=${{ secrets.PROD_USERNAME }}" >> $GITHUB_ENV
+          echo "PROD_PASSWORD=${{ secrets.PROD_PASSWORD }}" >> $GITHUB_ENV
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -74,3 +80,7 @@ jobs:
           app-name: 'TouristGuideDel3'
           slot-name: 'Production'
           package: '*.jar'
+          app-settings: |
+            PROD_DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}
+            PROD_USERNAME=${{ secrets.PROD_USERNAME }}
+            PROD_PASSWORD=${{ secrets.PROD_PASSWORD }}
