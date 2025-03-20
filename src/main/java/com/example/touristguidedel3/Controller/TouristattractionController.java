@@ -20,6 +20,11 @@ import java.util.List;
 public class TouristattractionController {
 
 
+
+
+
+
+
     private final TouristattractionService touristattractionService;
     private final TagService tagService;
     private final CityService cityService;
@@ -34,10 +39,16 @@ public class TouristattractionController {
         this.cityService = cityService;
     }
 
+
+    @GetMapping("/attractions")
+    public String getAllAttractions(Model model){
+        model.addAttribute("attractionList",touristattractionService.getAllAttractions());
+        return "attractions";
+    }
     // GET Attraction By Name
     @GetMapping("/attractions/{name}")
-    public String getAttractionByName(@PathVariable String name, Model model){
-        model.addAttribute("attraction",touristattractionService.getAttractionByName(name));
+    public String getAttractionByName(@PathVariable String name, Model model) {
+        model.addAttribute("attraction", touristattractionService.getAttractionByName(name));
         return "attraction";
     }
 
@@ -51,42 +62,41 @@ public class TouristattractionController {
 
         List<Tag> listOfTags = touristattractionService.getAttractionsTags(touristattraction.getId());
 
-        if (listOfTags.isEmpty()){
-            model.addAttribute("tagList","Ikke nogle tags");
-            model.addAttribute("attraction",touristattraction);
-        }
-        else{
-            model.addAttribute("attraction",touristattraction);
-            model.addAttribute("tagList",listOfTags);
+        if (listOfTags.isEmpty()) {
+            model.addAttribute("tagList", "Ikke nogle tags");
+            model.addAttribute("attraction", touristattraction);
+        } else {
+            model.addAttribute("attraction", touristattraction);
+            model.addAttribute("tagList", listOfTags);
         }
         return "attractionTags";
     }
 
     // POST Save Attraction
     @PostMapping("/attractions/save")
-    public String saveAttraction(@ModelAttribute TouristAttractionDTO touristattractionDTO){
+    public String saveAttraction(@ModelAttribute TouristAttractionDTO touristattractionDTO) {
         Touristattraction touristattraction = new Touristattraction();
         touristattraction.setName(touristattractionDTO.getName());
         touristattraction.setDescription(touristattractionDTO.getDescription());
         touristattraction.setCity(cityService.findCityByID(touristattractionDTO.getCityID()));
 
         List<Tag> tagList = new ArrayList<>();
-        if (touristattractionDTO.getTagsID() != null){
-            for (int id : touristattractionDTO.getTagsID()){
+        if (touristattractionDTO.getTagsID() != null) {
+            for (int id : touristattractionDTO.getTagsID()) {
                 tagList.add(tagService.findTagById(id));
             }
         }
 
         touristattraction.setTags(tagList);
 
-            touristattractionService.saveAttraction(touristattraction);
+        touristattractionService.saveAttraction(touristattraction);
         return "redirect:/attractions";
     }
 
     // GET Add attraction
     @GetMapping("/attractions/add")
     public String showAddAttractionForm(Model model) {
-        model.addAttribute("attractionList",touristattractionService.getAllAttractions());
+        model.addAttribute("attractionList", touristattractionService.getAllAttractions());
         model.addAttribute("attraction", new TouristAttractionDTO());
         model.addAttribute("cities", cityService.findAllCities());
         model.addAttribute("tags", tagService.findAllTags()); // DB values skal ind her
@@ -97,22 +107,22 @@ public class TouristattractionController {
     //Har ændret lidt i metoden, da den før brugte RequestBody, men nu bruger ModelAttribute, fordi en <form> ikke er komaptiable med RequestBody
     @PostMapping("/attractions/update")
     public String updateAttractions(@ModelAttribute TouristAttractionDTO touristAttractionDTO) {
-Touristattraction touristattraction = new Touristattraction();
-touristattraction.setId(touristAttractionDTO.getId());
-touristattraction.setName(touristAttractionDTO.getName());
-touristattraction.setDescription(touristAttractionDTO.getDescription());
+        Touristattraction touristattraction = new Touristattraction();
+        touristattraction.setId(touristAttractionDTO.getId());
+        touristattraction.setName(touristAttractionDTO.getName());
+        touristattraction.setDescription(touristAttractionDTO.getDescription());
 
-City city = cityService.findCityByID(touristAttractionDTO.getCityID());
-touristattraction.setCity(city);
+        City city = cityService.findCityByID(touristAttractionDTO.getCityID());
+        touristattraction.setCity(city);
 
-List<Tag> tagList = new ArrayList<>();
-if (touristAttractionDTO.getTagsID() != null){
-    for (int id : touristAttractionDTO.getTagsID()){
-        tagList.add(tagService.findTagById(id));
-    }
-}
+        List<Tag> tagList = new ArrayList<>();
+        if (touristAttractionDTO.getTagsID() != null) {
+            for (int id : touristAttractionDTO.getTagsID()) {
+                tagList.add(tagService.findTagById(id));
+            }
+        }
 
-touristattraction.setTags(tagList);
+        touristattraction.setTags(tagList);
 
         touristattractionService.updateAttraction(touristattraction);
         return "redirect:/attractions/add"; // Tilbage til administrationssiden efter opdatering
@@ -129,10 +139,10 @@ touristattraction.setTags(tagList);
     @GetMapping("/attractions/edit/{name}")
     public String editAttraction(@PathVariable String name, Model model) {
         Touristattraction toBeEdited = touristattractionService.getAttractionByName(name);
-        if (toBeEdited.getTags()==null){
+        if (toBeEdited.getTags() == null) {
             toBeEdited.setTags(new ArrayList<>());
         }
-        model.addAttribute("attraction",toBeEdited);
+        model.addAttribute("attraction", toBeEdited);
         model.addAttribute("cities", cityService.findAllCities());
         model.addAttribute("tags", tagService.findAllTags()); //DB values skal tages her
         return "editAttraction";
